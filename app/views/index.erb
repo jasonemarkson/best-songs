@@ -1,0 +1,6 @@
+<h1>My Favorite Songs to Play on Guitar</h1>
+<% @songs.each_with_index do |song, i| %>
+<ol>
+<h3>(<%= i + 1 %>) <%= song.name %> by <%= song.artist %> (<%= song.year %>) - <%= song.genre %></h3>
+</ol>
+<% end %>

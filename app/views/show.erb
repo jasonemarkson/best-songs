@@ -1,0 +1,15 @@
+<h1>Song Info</h1>
+
+Name: <%= @song.name %>
+<br>
+Artist: <%= @song.artist %>
+<br>
+Genre: <%= @song.genre %>
+<br>
+Year: <%= @song.year %>
+<br>
+<br>
+<form method="POST" action="/songs/<%= @song.id %>">
+<input id="hidden" type="hidden" name="_method" value="DELETE">
+<input type="submit" value="Delete">
+</form>
