@@ -6,8 +6,6 @@ Artist: <%= @song.artist %>
 <br>
 Genre: <%= @song.genre %>
 <br>
-Year: <%= @song.year %>
-<br>
 <br>
 <form method="POST" action="/songs/<%= @song.id %>">
 <input id="hidden" type="hidden" name="_method" value="DELETE">

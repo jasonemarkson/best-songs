@@ -8,44 +8,25 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/' do
-    "Hello World, get ready to hear my top songs to play on guitar!"
+    erb :home
   end
+  
+  #helper methods -- still need to play around with these; will rearrange code to utilize these
 
-  get '/songs' do 
-    @songs = Song.all
-    erb :index
-  end
+  helpers do
+    def logged_in?
+      !!session[:username]
+    end
 
-  get '/songs/new' do
-    erb :new
-  end
-
-  post '/songs' do
-    @song = Song.create(name: params[:name], artist: params[:artist], year: params[:year], genre: params[:genre])
-    redirect to "/songs/#{@song.id}"
-  end
-
-  get '/songs/:id' do
-    @song = Song.find_by_id(params[:id])
-    erb :show
-  end
-
-  get '/songs/:id/edit' do
-    @song = Song.find_by_id(params[:id])
-    erb :edit
-  end
-
-  patch '/songs/:id' do
-    @song = Song.find_by_id(params[:id])
-    @new_song = @song.update(name: params[:name], artist: params[:artist], year: params[:year], genre: params[:genre])
-    redirect to "/songs/#{@song.id}"
-  end
-
-  delete '/songs/:id' do
-    @song = Song.find_by_id(params[:id])
-    @song.delete
-    erb :show
-    redirect to "/songs"
+    def login(email, password)
+      user = User.find_by_id(params[:id])
+      if user && user.authenticate(password)
+        session[:username] = user[:username]
+      else 
+        redirect to 'login'
+      end
+    end
+    
   end
 
 end

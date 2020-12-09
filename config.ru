@@ -8,4 +8,6 @@ use Rack::MethodOverride
 
 use UserController
 
+use SongController
+
 run ApplicationController
