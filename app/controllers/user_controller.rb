@@ -1,21 +1,16 @@
 require './config/environment'
 
-class UserController < Sinatra::Base
+class UserController < ApplicationController
     
-    configure do
-        set :public_folder, 'public'
-        set :views, 'app/views'
-      end
-
     #signing up
     
-    get '/registrations/signup' do
-        erb :'registrations/signup'
+    get '/signup' do
+        erb :'users/signup'
     end
 
-    post '/registrations' do
+    post '/users' do
         @user = User.new(name: params[:name],username: params[:username], password: params[:password])
-        
+        binding.pry
         if @user.save
             session[:user_id] = @user.id
             redirect to '/users/home'
@@ -31,28 +26,27 @@ class UserController < Sinatra::Base
 
     #logging in
 
-    get '/sessions/login' do
-        erb :'/sessions/login'
+    get '/login' do
+        erb :'users/login'
     end
 
-    post '/sessions' do
+    post '/users/home' do
         @user = User.find_by(username: params[:username])
         
         if @user && @user.authenticate(params[:password])
             session[:user_id] = @user.id
             erb :'users/home'
         else
-            redirect to '/sessions/login'
+            redirect to '/login'
         end
     end
 
     #logging out
 
-    get '/sessions/logout' do
+    get '/logout' do
         session.clear
         redirect to '/'
     end
 
-    
 
 end

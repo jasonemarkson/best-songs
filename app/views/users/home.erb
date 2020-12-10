@@ -1,6 +1,11 @@
-<h1>Welcome <%= @user.name %></h1>
-<h2>You sure do play the best songs</h2>
-<% binding.pry %>
-<%= @user.songs %>
+<h1>Welcome, <%= current_user.name%></h1>
+<h2>You sure do have a great selection!</h2>
+
+<p>Your Songbook has <%=current_user.songs.size %> song(s).</p>
+
 <br>
-<a href='/sessions/logout'>Log Out</a>
+<br>
+<br>
+<br><a href='/songs'>View List of Songs</a>
+<br><a href='/songs/new'>Add a Song</a>
+<br><a href='/logout'>Log Out</a>
