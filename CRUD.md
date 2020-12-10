@@ -7,3 +7,9 @@
 | GET | /songs/:id/edit | edit | #Get a form to edit 1 song
 | PUT/PATCH | /songs/:id | | #update 1 song
 | DELETE | /songs/:id | | #delete 1 song
+
+#pushing changes to git hub
+
+git add .
+git commit -m "message"
+git push

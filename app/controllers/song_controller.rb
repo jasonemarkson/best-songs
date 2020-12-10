@@ -16,36 +16,55 @@ class SongController < ApplicationController
     end
 
     post '/songs' do
-        @song = Song.create(name: params[:name], artist: params[:artist], genre: params[:genre])
-        @song.user_id = current_user.id
-        @song.save
-        redirect to "/songs/#{@song.id}"
+        #check if any fields are blank
+        if params[:name] == "" || params[:artist] == "" || params[:genre] == ""
+            redirect to "/songs/new"
+        else
+            song = Song.create(name: params[:name], artist: params[:artist], genre: params[:genre])
+            song.user_id = current_user.id
+            song.save
+            redirect to "/songs/#{song.id}"
+        end
     end
     
     get '/songs/:id' do
+        #user can only view the songs they have created -- conditional
+
         @song = Song.find(params[:id])
-        erb :'songs/show'
+
+        if !logged_in?
+            redirect to '/login'
+        elsif current_user.id == @song.user_id
+            erb :'songs/show'              
+        else
+            erb :'songs/error'
+        end
     end
     
     get '/songs/:id/edit' do
         @song = Song.find(params[:id])
-        binding.pry
-        
-        
+
         if !logged_in?
             redirect to '/login'
-        # elsif current_user.id == params[:id]
-        #     erb :'songs/error'
-        else
-            @song = Song.find(params[:id])
+        elsif current_user.id == @song.user_id
             erb :'songs/edit'
+        else
+            erb :'songs/error'
         end
     end
 
     patch '/songs/:id' do
-        @song = Song.find_by_id(params[:id])
-        @new_song = @song.update(name: params[:name], artist: params[:artist], genre: params[:genre])
-        redirect to "/songs/#{@song.id}"
+        @song = Song.find(params[:id])
+
+        if !logged_in?
+            redirect to '/login'
+        elsif params[:name] == "" || params[:artist] == "" || params[:genre] == ""
+            redirect to "/songs/#{@song.id}/edit"
+        else
+            @song = Song.find_by_id(params[:id])
+            @new_song = @song.update(name: params[:name], artist: params[:artist], genre: params[:genre])
+            redirect to "/songs/#{@song.id}"
+        end
     end
 
     delete '/songs/:id' do
