@@ -19,8 +19,13 @@ class UserController < ApplicationController
     end
 
     get '/users/home' do
-        @user = User.find_by(session[:id])
-        erb :'users/home'
+        @user = current_user
+        if !logged_in?
+            redirect to '/'
+        else
+            @songs = @user.songs
+            erb :'users/home'
+        end
     end
 
     #logging in
@@ -31,7 +36,8 @@ class UserController < ApplicationController
 
     post '/users/home' do
         @user = User.find_by(username: params[:username])
-        
+        @songs = @user.songs
+
         if @user && @user.authenticate(params[:password])
             session[:user_id] = @user.id
             erb :'users/home'

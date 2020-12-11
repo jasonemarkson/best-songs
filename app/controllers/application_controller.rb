@@ -13,30 +13,18 @@ class ApplicationController < Sinatra::Base
     erb :home
   end
   
-  #helper methods -- still need to play around with these; will rearrange code to utilize
-
+  #helper methods
+  
   helpers do
 		def logged_in?
 			!!session[:user_id]
     end
-    
-    # def login(username, password)
-    #   user = User.find_by(username: username)
 
-    #   if user && user.authenticate(password)
-    #     session[:username] = user.username
-    #   else
-    #     redirect '/sessions/login'
-    #   end
-    # end
 
 		def current_user
-			User.find(session[:user_id])
+			User.find_by_id(session[:user_id])
     end
-    
-    # def logout! #why the '!' ?
-    #   session.clear
-    # end
+
   end
 
 end

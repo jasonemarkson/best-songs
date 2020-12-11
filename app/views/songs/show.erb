@@ -1,16 +1,16 @@
 <h1>Song Info</h1>
 
-Name: <%= @song.name %>
+<label>Name: </label> <%= @song.name %>
 <br>
-Artist: <%= @song.artist %>
+<label>Artist: </label> <%= @song.artist %>
 <br>
-Genre: <%= @song.genre %>
+<label>Genre: </label> <%= @song.genre %>
 <br>
 <br>
-<form method="POST" action="/songs/<%= @song.id %>">
+<%if current_user.id == @song.user_id %><form method="POST" action="/songs/<%= @song.id %>">
 <input id="hidden" type="hidden" name="_method" value="DELETE">
 <input type="submit" value="Delete">
-</form>
+</form><%end%>
 
 <br><a href='/songs/new'>Add Another Song</a>
 <br><a href='/users/home'>View Homepage</a>

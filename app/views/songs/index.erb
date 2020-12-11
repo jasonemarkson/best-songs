@@ -1,6 +1,9 @@
-<h1>My Favorite Songs to Play</h1>
+<h1>My Golden Songbook</h1>
+
 <ol type = "1"><% @songs.each do |song| %>
-<h4><li><%= song.name %> by <%= song.artist %></li></h4><a href="/songs/<%= song.id %>/edit">Edit</a> <a href="/songs/<%= song.id %>">View</a>
+
+<h4><li><%= song.name %> by <%= song.artist %></li></h4> <a href="/songs/<%= song.id %>">View</a>
+<%if song.user == current_user%><a href="/songs/<%= song.id %>/edit">Edit</a><%end%>
 <% end %></ol>
 <br>
 <br>

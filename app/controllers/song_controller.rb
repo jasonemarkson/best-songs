@@ -3,13 +3,13 @@ require './config/environment'
 class SongController < ApplicationController
 
     get '/songs' do
-        @songs = Song.all.select { |song| song.user_id == current_user.id }
+        @songs = Song.all
         erb :'songs/index'
     end 
 
     get '/songs/new' do
         if !logged_in?
-            redirect to '/login'
+            redirect to '/'
         else
             erb :'songs/new'
         end
@@ -28,24 +28,26 @@ class SongController < ApplicationController
     end
     
     get '/songs/:id' do
-        #user can only view the songs they have created -- conditional
 
-        @song = Song.find(params[:id]) #if you type in a song.id that isn't created yet, we should have it reroute to the error page
+        if @song = Song.find_by_id(params[:id]) #if you type in a song.id that isn't created yet, we should have it reroute to the error page
 
-        if !logged_in?
-            redirect to '/login'
-        elsif current_user.id == @song.user_id
-            erb :'songs/show'              
+            if !logged_in?
+                redirect to '/'
+            else
+                erb :'songs/show'  
+            end
+
         else
             erb :'songs/error'
         end
+        
     end
     
     get '/songs/:id/edit' do
         @song = Song.find(params[:id])
 
         if !logged_in?
-            redirect to '/login'
+            redirect to '/'
         elsif current_user.id == @song.user_id
             erb :'songs/edit'
         else
@@ -57,7 +59,7 @@ class SongController < ApplicationController
         @song = Song.find(params[:id])
 
         if !logged_in?
-            redirect to '/login'
+            redirect to '/'
         elsif params[:name] == "" || params[:artist] == "" || params[:genre] == ""
             redirect to "/songs/#{@song.id}/edit"
         else
