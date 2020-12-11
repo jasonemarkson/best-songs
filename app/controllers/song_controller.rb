@@ -30,7 +30,7 @@ class SongController < ApplicationController
     get '/songs/:id' do
         #user can only view the songs they have created -- conditional
 
-        @song = Song.find(params[:id])
+        @song = Song.find(params[:id]) #if you type in a song.id that isn't created yet, we should have it reroute to the error page
 
         if !logged_in?
             redirect to '/login'

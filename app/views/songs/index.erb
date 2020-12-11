@@ -1,9 +1,7 @@
 <h1>My Favorite Songs to Play</h1>
-<% @songs.each_with_index do |song, i| %>
-<ol>
-<h4>(<%= i + 1 %>) <%= song.name %> by <%= song.artist %> - <%= song.genre %></h4><a href="/songs/<%= song.id %>/edit">Edit</a> <a href="/songs/<%= song.id %>">View</a>
-</ol>
-<% end %>
+<ol type = "1"><% @songs.each do |song| %>
+<h4><li><%= song.name %> by <%= song.artist %></li></h4><a href="/songs/<%= song.id %>/edit">Edit</a> <a href="/songs/<%= song.id %>">View</a>
+<% end %></ol>
 <br>
 <br>
 <br>
