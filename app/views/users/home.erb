@@ -1,12 +1,12 @@
 <html>
     <head>
         <h1>Welcome, <%= current_user.name%></h1>
-        <h2>Keep track of your favorite songs to play or listen to!</h2>
+        <h3>Keep track of your favorite songs to play or listen to!</h3>
         <link rel="stylesheet" href="./../stylesheets/main.css">
     </head>
-        <body>
+    <body>
         <p>Your Songbook has <%=current_user.songs.size %> song(s).</p>
-        <ol type = "1"><% @songs.each do |song| %>
+        <ol type = "1"><% @user.songs.each do |song| %>
         <h4><li><%= song.name %> by <%= song.artist %></li></h4> <a href="/songs/<%= song.id %>">View</a>
         <% end %></ol>
         <br>

@@ -36,7 +36,6 @@ class UserController < ApplicationController
 
     post '/users/home' do
         @user = User.find_by(username: params[:username])
-        @songs = @user.songs
 
         if @user && @user.authenticate(params[:password])
             session[:user_id] = @user.id

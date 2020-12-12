@@ -1,18 +1,23 @@
-<h1>Song Info</h1>
+<html>
+    <head>
+        <h1>Song Info</h1>
+    </head>
+    <body>
+        <label>Name: </label> <%= @song.name %>
+        <br>
+        <label>Artist: </label> <%= @song.artist %>
+        <br>
+        <label>Genre: </label> <%= @song.genre %>
+        <br>
+        <br>
+        <%if current_user.id == @song.user_id %><form method="POST" action="/songs/<%= @song.id %>">
+        <input id="hidden" type="hidden" name="_method" value="DELETE">
+        <input type="submit" value="Delete">
+        </form><%end%>
 
-<label>Name: </label> <%= @song.name %>
-<br>
-<label>Artist: </label> <%= @song.artist %>
-<br>
-<label>Genre: </label> <%= @song.genre %>
-<br>
-<br>
-<%if current_user.id == @song.user_id %><form method="POST" action="/songs/<%= @song.id %>">
-<input id="hidden" type="hidden" name="_method" value="DELETE">
-<input type="submit" value="Delete">
-</form><%end%>
-
-<br><a href='/songs/new'>Add Another Song</a>
-<br><a href='/users/home'>View Homepage</a>
-<br><a href='/songs'>View List of Songs</a>
-<br><a href='/logout'>Log Out</a>
+        <br><a href='/songs/new'>Add Another Song</a>
+        <br><a href='/users/home'>View Homepage</a>
+        <br><a href='/songs'>View List of Songs</a>
+        <br><a href='/logout'>Log Out</a>
+    </body>
+</html>
