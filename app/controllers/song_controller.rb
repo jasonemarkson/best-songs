@@ -44,17 +44,16 @@ class SongController < ApplicationController
     end
     
     get '/songs/:id/edit' do
-
         if @song = Song.find_by_id(params[:id]) #added the #find_by_id instead of #find method that was causing the program to break
-
+            
             if !logged_in?
                 redirect to '/'
-            else current_user.id == @song.user_id
+            elsif current_user.id == @song.user_id
                 erb :'songs/edit'
+            else
+                erb :'songs/error'
             end
-
-        else
-            erb :'songs/error'
+    
         end
 
     end
