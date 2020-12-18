@@ -1,6 +1,7 @@
 require './config/environment'
 
 class UserController < ApplicationController
+    register Sinatra::Flash
     
     #signing up
     
@@ -14,6 +15,7 @@ class UserController < ApplicationController
             session[:user_id] = @user.id
             redirect to '/users/home'
         else
+            flash[:message] = "Signup invalid. Please enter in all of the fields."
             redirect to '/signup'
         end
     end
@@ -39,8 +41,10 @@ class UserController < ApplicationController
 
         if @user && @user.authenticate(params[:password])
             session[:user_id] = @user.id
+            @songs = @user.songs
             erb :'users/home'
         else
+            flash[:message] = "Login invalid. Please try again."
             redirect to '/login'
         end
     end

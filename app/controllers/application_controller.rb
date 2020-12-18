@@ -7,6 +7,7 @@ class ApplicationController < Sinatra::Base
     set :views, 'app/views'
     enable :sessions
     set :session_secret, "orange"
+    register Sinatra::Flash
   end
 
   get '/' do
@@ -22,7 +23,8 @@ class ApplicationController < Sinatra::Base
 
 
 		def current_user
-			User.find_by_id(session[:user_id])
+      #@current_user ||= User.find_by_id(session[:user_id]) -- why does this work
+      User.find_by_id(session[:user_id])
     end
 
   end

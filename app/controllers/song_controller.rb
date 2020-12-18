@@ -18,8 +18,10 @@ class SongController < ApplicationController
     post '/songs' do
         #check if any fields are blank
         if params[:name] == "" || params[:artist] == "" || params[:genre] == ""
+            flash[:message] = "Please enter in all of the fields."
             redirect to "/songs/new"
         else
+            #current_user.songs.build(params) -- associates the two objects - step further than .create
             song = Song.create(name: params[:name], artist: params[:artist], genre: params[:genre])
             song.user_id = current_user.id
             song.save
@@ -45,14 +47,13 @@ class SongController < ApplicationController
     
     get '/songs/:id/edit' do
         if @song = Song.find_by_id(params[:id]) #added the #find_by_id instead of #find method that was causing the program to break
-            
             if !logged_in?
                 redirect to '/'
             elsif current_user.id == @song.user_id
                 erb :'songs/edit'
-            else
-                erb :'songs/error'
             end
+        else
+            redirect to "/songs/#{params[:id]}" #added this to avoid a break in code - if id has not been created, redirect to the '/songs/id' route
     
         end
 
@@ -64,6 +65,7 @@ class SongController < ApplicationController
         if !logged_in?
             redirect to '/'
         elsif params[:name] == "" || params[:artist] == "" || params[:genre] == ""
+            flash[:message] = "Please enter in all of the fields."
             redirect to "/songs/#{@song.id}/edit"
         else
             @song = Song.find_by_id(params[:id])

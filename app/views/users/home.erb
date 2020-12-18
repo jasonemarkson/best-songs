@@ -1,19 +1,13 @@
-<html>
-    <head>
-        <h1>Welcome, <%= current_user.name%></h1>
-        <h3>Keep track of your favorite songs to play or listen to!</h3>
-        <link rel="stylesheet" href="./../stylesheets/main.css">
-    </head>
-    <body>
-        <p>Your Songbook has <%=current_user.songs.size %> song(s).</p>
-        <ol type = "1"><% @user.songs.each do |song| %>
-        <h4><li><%= song.name %> by <%= song.artist %></li></h4> <a href="/songs/<%= song.id %>">View</a>
-        <% end %></ol>
-        <br>
-        <br>
-        <br>
-        <br><a href='/songs'>View List of Songs</a>
-        <br><a href='/songs/new'>Add a Song</a>
-        <br><a href='/logout'>Log Out</a>
-    </body>
-</html>
+<h1>Welcome, <%= @user.name%></h1>
+<h3>Keep track of your favorite songs to play or listen to!</h3>
+
+<p>Your Songbook has <%=@songs.size %> song(s).</p>
+<ol type = "1"><% @songs.each do |song| %>
+<h4><li><%= song.name %> by <%= song.artist %></li></h4> <a href="/songs/<%= song.id %>">View</a>
+<% end %></ol>
+<br>
+<br>
+<br>
+<br><a href='/songs'>View List of Songs</a>
+<br><a href='/songs/new'>Add a Song</a>
+<br><a href='/logout'>Log Out</a>
